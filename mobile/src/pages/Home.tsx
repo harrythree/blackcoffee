@@ -8,18 +8,18 @@ import {
   IonTitle
 } from '@ionic/react';
 import React from 'react';
-import './Tab1.css';
+import './Home.css';
 import Registration from '../Registration';
 import useModal from '../useModal';
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
   const { isShowing, toggle } = useModal();
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab1</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -32,4 +32,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Home;
