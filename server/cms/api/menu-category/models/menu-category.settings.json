@@ -1,0 +1,17 @@
+{
+  "connection": "default",
+  "collectionName": "menu_categories",
+  "info": {
+    "name": "MenuCategory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

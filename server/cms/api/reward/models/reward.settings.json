@@ -1,0 +1,20 @@
+{
+  "info": {
+    "name": "Reward"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "amount": {
+      "type": "integer"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  },
+  "connection": "default",
+  "collectionName": "rewards"
+}

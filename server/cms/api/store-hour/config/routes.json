@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/store-hours",
+      "handler": "store-hour.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store-hours/count",
+      "handler": "store-hour.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store-hours/:id",
+      "handler": "store-hour.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store-hours",
+      "handler": "store-hour.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/store-hours/:id",
+      "handler": "store-hour.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/store-hours/:id",
+      "handler": "store-hour.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

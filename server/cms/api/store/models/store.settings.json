@@ -1,0 +1,46 @@
+{
+  "connection": "default",
+  "collectionName": "stores",
+  "info": {
+    "name": "Store"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "street": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "state": {
+      "type": "string",
+      "required": true
+    },
+    "latitude": {
+      "type": "float",
+      "required": true
+    },
+    "longitude": {
+      "type": "float",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "store_hours": {
+      "collection": "store-hour",
+      "via": "stores",
+      "dominant": true
+    }
+  }
+}

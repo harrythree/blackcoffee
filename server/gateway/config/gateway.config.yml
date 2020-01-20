@@ -1,0 +1,45 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+apiEndpoints:
+  auth:
+    paths:
+      - '/login'
+      - '/register'
+  graphql:
+    paths:
+      - '/graphql'
+serviceEndpoints:
+  authService:
+    url: 'http://users:3001'
+  graphqlService:
+    url: 'http://graphql:4000'
+policies:
+  - jwt
+  - request-transformer
+  - proxy
+pipelines:
+  graphql:
+    apiEndpoints:
+      - graphql
+    policies:
+      - jwt:
+        - action:
+            secretOrPublicKey: 'supersecret'
+            checkCredentialExistence: false
+      - request-transformer:
+        - action:
+            body:
+              add:
+                user: req.user
+      - proxy:
+        - action:
+            serviceEndpoint: graphqlService
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - proxy:
+        - action:
+            serviceEndpoint: authService

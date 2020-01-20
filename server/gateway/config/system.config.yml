@@ -1,0 +1,10 @@
+# Core
+db:
+  redis:
+    emulate: true
+    namespace: EG
+
+crypto:
+  cipherKey: sensitiveKey
+  algorithm: aes256
+  saltRounds: 10

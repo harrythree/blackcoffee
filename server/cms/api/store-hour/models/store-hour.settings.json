@@ -1,0 +1,29 @@
+{
+  "connection": "default",
+  "collectionName": "store_hours",
+  "info": {
+    "name": "StoreHour"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "day": {
+      "type": "string",
+      "required": true
+    },
+    "open": {
+      "type": "string",
+      "required": true
+    },
+    "close": {
+      "type": "string",
+      "required": true
+    },
+    "stores": {
+      "via": "store_hours",
+      "collection": "store"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "black-coffee-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-datasource-rest": "^0.6.11",
+    "apollo-server": "^2.9.14",
+    "dotenv": "^8.2.0",
+    "graphql": "^14.5.8",
+    "lodash.merge": "^4.6.2",
+    "stripe": "^7.15.0"
+  }
+}

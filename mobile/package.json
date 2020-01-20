@@ -1,44 +1,49 @@
 {
-  "name": "mobile",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "@ionic/react": "^4.11.0",
-    "@ionic/react-router": "^4.11.0",
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.12",
-    "@types/react": "^16.9.5",
-    "@types/react-dom": "^16.9.1",
-    "@types/react-router": "^5.1.1",
-    "@types/react-router-dom": "^5.1.0",
-    "ionicons": "^4.6.3",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-router": "^5.1.0",
-    "react-router-dom": "^5.1.0",
-    "react-scripts": "3.2.0",
-    "typescript": "3.6.3"
-  },
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "test": "jest --watchAll"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "jest": {
+    "preset": "jest-expo"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
+    "@expo/samples": "~36.0.0",
+    "@expo/vector-icons": "~10.0.0",
+    "@react-navigation/web": "~1.0.0-alpha.9",
+    "apollo-boost": "^0.4.7",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.13",
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
+    "expo": "~36.0.0",
+    "expo-asset": "~8.0.0",
+    "expo-constants": "~8.0.0",
+    "expo-font": "~8.0.0",
+    "expo-web-browser": "~8.0.0",
+    "graphql": "^14.5.8",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-gesture-handler": "~1.5.0",
+    "react-native-reanimated": "~1.4.0",
+    "react-native-screens": "2.0.0-alpha.12",
+    "react-native-web": "~0.11.7",
+    "react-navigation": "~4.0.10",
+    "react-navigation-stack": "~1.10.3",
+    "react-navigation-tabs": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-preset-expo": "~8.0.0",
+    "jest-expo": "~36.0.1"
+  },
+  "private": true
 }

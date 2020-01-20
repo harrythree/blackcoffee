@@ -1,0 +1,24 @@
+{
+  "connection": "default",
+  "collectionName": "news_items",
+  "info": {
+    "name": "NewsItem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "type": "string"
+    }
+  }
+}

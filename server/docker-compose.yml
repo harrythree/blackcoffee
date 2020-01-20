@@ -1,0 +1,42 @@
+version: "3.7"
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - 8080:8080
+    depends_on:
+      - cms
+      - users
+      - graphql
+  cms:
+    build: ./cms
+    depends_on:
+      - mongo
+    # ports:
+    #   - 1337:1337
+    environment:
+      - DATABASE_HOST=mongo
+      - DATABASE_NAME=blackcoffeecms
+  users:
+    build: ./users
+    restart: on-failure
+    env_file:
+      - ./users/.env
+    depends_on:
+      - postgres
+  graphql:
+    build: ./graphql
+    env_file:
+      - ./graphql/.env
+    depends_on:
+      - cms
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=usersdb
+  mongo:
+    image: mongo
+    volumes:
+      - mongodb:/data/db
+volumes:
+  mongodb:

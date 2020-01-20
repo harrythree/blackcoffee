@@ -1,0 +1,20 @@
+{
+  "name": "black-coffee-users-service",
+  "version": "1.0.0",
+  "description": "Black Coffee Users Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Harry Baldwin",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.6",
+    "koa": "^2.11.0",
+    "koa-joi-router": "^6.0.1",
+    "pg": "^7.17.0"
+  }
+}

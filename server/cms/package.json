@@ -1,0 +1,37 @@
+{
+  "name": "black-coffee-cms",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Black Coffee CMS",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi build && strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "faker": "^4.1.0",
+    "strapi": "3.0.0-beta.18.3",
+    "strapi-admin": "3.0.0-beta.18.3",
+    "strapi-connector-mongoose": "3.0.0-beta.18.3",
+    "strapi-plugin-content-manager": "3.0.0-beta.18.3",
+    "strapi-plugin-content-type-builder": "3.0.0-beta.18.3",
+    "strapi-plugin-documentation": "^3.0.0-beta.18.3",
+    "strapi-plugin-email": "3.0.0-beta.18.3",
+    "strapi-plugin-upload": "3.0.0-beta.18.3",
+    "strapi-plugin-users-permissions": "3.0.0-beta.18.3",
+    "strapi-utils": "3.0.0-beta.18.3"
+  },
+  "author": {
+    "name": "Harry Baldwin"
+  },
+  "strapi": {
+    "uuid": "23e444c7-c144-4f79-8550-a8fb0246ea65"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
