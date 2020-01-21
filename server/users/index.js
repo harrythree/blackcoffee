@@ -18,21 +18,33 @@ const knex = require('knex')({
 const app = new Koa();
 const userRouter = router();
 const { Joi } = router;
+const joiStringMax100Required = Joi.string().max(100).required();
+const expiresIn = { expiresIn: '1h' };
 
 userRouter.route({
   method: 'post',
   path: '/register',
   validate: {
     body: {
-      email: Joi.string().max(100).required(),
-      password: Joi.string().max(100).required()
+      email: joiStringMax100Required,
+      firstName: joiStringMax100Required,
+      lastName: joiStringMax100Required,
+      password: joiStringMax100Required
     },
     type: 'json'
   },
   handler: async (ctx) => {
-    const { email, password } = ctx.request.body;
+    const { email, firstName, lastName, password } = ctx.request.body;
+    
     const hash = await bcrypt.hash(password, 10);
-    const [ id ] = await knex.insert({ email, password: hash }).table('users').returning('id')
+    const userInsertData = {
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      password: hash
+    };
+    
+    const [ id ] = await knex.insert(userInsertData).table('users').returning('id')
       .catch((err) => {
         if (err.constraint === 'users_email_unique') {
           return ctx.throw(400);
@@ -40,7 +52,17 @@ userRouter.route({
         throw err;
       });
 
-    ctx.body = jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const body = {
+      jwt: jwt.sign({ id }, process.env.JWT_SECRET, expiresIn),
+      user: {
+        id,
+        email,
+        firstName,
+        lastName
+      }
+    };
+
+    ctx.body = body;
   }
 });
 
@@ -49,8 +71,8 @@ userRouter.route({
   path: '/login',
   validate: {
     body: {
-      email: Joi.string().max(100).required(),
-      password: Joi.string().max(100).required()
+      email: joiStringMax100Required,
+      password: joiStringMax100Required
     },
     type: 'json'
   },
@@ -59,14 +81,45 @@ userRouter.route({
     const user = await knex('users').where({ email }).first();
     
     if (user) {
-      const valid = await bcrypt.compare(password, user.password);
+      const { id, password: userPassword, first_name: firstName, last_name: lastName } = user;
+      const valid = await bcrypt.compare(password, userPassword);
 
       if (valid) {
-        return ctx.body = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const body = {
+          jwt: jwt.sign({ id: user.id }, process.env.JWT_SECRET, expiresIn),
+          user: {
+            id,
+            email,
+            firstName,
+            lastName
+          }
+        }
+        return ctx.body = body;
       }
     }
 
     ctx.throw(401);
+  }
+});
+
+userRouter.route({
+  method: 'post',
+  path: '/info',
+  validate: {
+    body: {
+      jwt: Joi.string().required()
+    },
+    type: 'json'
+  },
+  handler: async (ctx) => {
+    const { jwt: jwtToVerify } = ctx.request.body;
+
+    try {
+      const decoded = jwt.verify(jwtToVerify, process.env.JWT_SECRET);
+      return ctx.body = decoded;
+    } catch (e) {
+      ctx.throw(401);
+    }
   }
 });
 

@@ -1,6 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const merge = require('lodash.merge');
 
+const { typeDef: Users, resolvers: usersResolvers } = require('./users');
 const { typeDef: Payments, resolvers: paymentsResolvers } = require('./payments');
 const { typeDef: Orders, resolvers: ordersResolvers } = require('./orders');
 const { typeDef: MenuItems, resolvers: menuItemsResolvers } = require('./menu-items');
@@ -15,8 +16,8 @@ const Query = `
 `;
 
 const schema = makeExecutableSchema({
-  typeDefs: [Query, Payments, Orders, MenuItems],
-  resolvers: merge(paymentsResolvers, ordersResolvers, menuItemsResolvers),
+  typeDefs: [Query, Users, Payments, Orders, MenuItems],
+  resolvers: merge(usersResolvers, paymentsResolvers, ordersResolvers, menuItemsResolvers),
 });
 
 module.exports = schema;

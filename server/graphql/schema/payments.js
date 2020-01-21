@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server');
 const { charges } = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const authenticated = require('../lib/authenticated');
+
 const typeDef = gql`
   type Payment {
     id: String
@@ -17,7 +19,10 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
-    payments: () => [],
+    payments: authenticated((parent, args, { user }) => {
+      console.log(user);
+      return [];
+    }),
   },
   Mutation: {
     createPayment: async (parent, { token, amount, customerId }) => {
