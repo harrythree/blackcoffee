@@ -5,7 +5,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -39,6 +40,9 @@ export default function HomeScreen() {
           )
         })}
       </ScrollView>
+      <TouchableHighlight style={styles.joinNowButton} onPress={() => console.log('pressed...')}>
+        <Text style={styles.joinNowText}>Join now</Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 }
@@ -80,5 +84,21 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     padding: 10,
+  },
+  joinNowButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    height: 55,
+    width: 130,
+    borderRadius: 30,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  joinNowText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold'
   }
 });
