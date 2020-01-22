@@ -9,6 +9,10 @@ class CmsAPI extends RESTDataSource {
   getMenuItems() {
     return this.get('/menu-items');
   }
+
+  getNewsItems() {
+    return this.get('/news-items');
+  }
 }
 
 module.exports = CmsAPI;

@@ -16,8 +16,7 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
-    menuItems: async (parent, args, { dataSources, user }) => {
-      console.log(user);
+    menuItems: async (parent, args, { dataSources }) => {
       const results = await dataSources.cmsAPI.getMenuItems();
       return results.map(({
         name,

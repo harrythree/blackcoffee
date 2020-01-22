@@ -1,14 +1,14 @@
 version: "3.7"
 services:
-  # cms:
-  #   build: ./cms
-  #   depends_on:
-  #     - mongo
-  #   # ports:
-  #   #   - 1337:1337
-  #   environment:
-  #     - DATABASE_HOST=mongo
-  #     - DATABASE_NAME=blackcoffeecms
+  cms:
+    build: ./cms
+    depends_on:
+      - mongo
+    # ports:
+    #   - 1337:1337
+    environment:
+      - DATABASE_HOST=mongo
+      - DATABASE_NAME=blackcoffeecms
   users:
     build: ./users
     restart: on-failure
@@ -20,8 +20,8 @@ services:
     build: ./graphql
     env_file:
       - ./graphql/.env
-    # depends_on:
-    #   - cms
+    depends_on:
+      - cms
     ports:
       - 4000:4000
   postgres:
