@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import OrdersScreen from '../screens/OrdersScreen';
+import StoresScreen from '../screens/StoresScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -25,53 +25,49 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
     />
   ),
 };
 
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+const OrdersStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Orders: OrdersScreen,
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+OrdersStack.navigationOptions = {
+  tabBarLabel: 'Orders',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-cafe' : 'md-cafe'} />
   ),
 };
 
-LinksStack.path = '';
+OrdersStack.path = '';
 
-const SettingsStack = createStackNavigator(
+const StoresStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Stores: StoresScreen,
   },
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+StoresStack.navigationOptions = {
+  tabBarLabel: 'Stores',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-pin' : 'md-pin'} />
   ),
 };
 
-SettingsStack.path = '';
+StoresStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  OrdersStack,
+  StoresStack,
 });
 
 tabNavigator.path = '';

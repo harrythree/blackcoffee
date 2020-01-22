@@ -9,14 +9,13 @@ import AppNavigator from './navigation/AppNavigator';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloLink } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { onError } from 'apollo-link-error';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const authLink = setContext((_, { headers }) => {
   // const token = await AsyncStorage.getItem('bcToken');
-  const token = 'stuff';
+  const token = null;
   return {
     headers: {
       ...headers,
@@ -25,27 +24,8 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-const customFetch = async (uri, options) => {
-  const res = await fetch(uri, options);
-  console.log('res', res);
-  console.log('status', res.status);
-  
-  if (res.status >= 500 || res.status === 401) {
-    console.log('handle errors');
-    const text = await res.text();
-    console.log('text', text);
-    const newError = new Error(text);
-    newError.status = res.status;
-    console.log('new error', newError);
-    return Promise.reject(newError);
-  }
-
-  return Promise.resolve(res);
-};
-
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql',
-  fetch: customFetch
+  uri: 'http://localhost:4000/graphql'
 });
 
 const client = new ApolloClient({
