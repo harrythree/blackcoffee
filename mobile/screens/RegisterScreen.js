@@ -44,7 +44,7 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={text => setPassword(text)}
         value={password}
       />
-      <Button title="Register" onPress={register} />
+      <Button title="Register" onPress={() => register()} />
     </View>
   );
 }

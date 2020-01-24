@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import OrdersScreen from '../screens/OrdersScreen';
+import OrderScreen from '../screens/OrderScreen';
 import StoresScreen from '../screens/StoresScreen';
 
 const config = Platform.select({
@@ -32,21 +32,21 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const OrdersStack = createStackNavigator(
+const OrderStack = createStackNavigator(
   {
-    Orders: OrdersScreen,
+    Order: OrderScreen,
   },
   config
 );
 
-OrdersStack.navigationOptions = {
-  tabBarLabel: 'Orders',
+OrderStack.navigationOptions = {
+  tabBarLabel: 'Order',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-cafe' : 'md-cafe'} />
   ),
 };
 
-OrdersStack.path = '';
+OrderStack.path = '';
 
 const StoresStack = createStackNavigator(
   {
@@ -66,7 +66,7 @@ StoresStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  OrdersStack,
+  OrderStack,
   StoresStack,
 });
 
