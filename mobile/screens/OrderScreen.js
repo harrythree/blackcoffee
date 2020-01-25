@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, Text } from 'react-native';
+import { StyleSheet, FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
@@ -15,7 +15,7 @@ const MENU_ITEMS = gql`
   }
 `;
 
-export default function OrderScreen() {
+export default function OrderScreen({ navigation }) {
   const { loading, error, data } = useQuery(MENU_ITEMS);
 
   if (loading) return <Text>Loading...</Text>;
@@ -28,7 +28,21 @@ export default function OrderScreen() {
   return (
     <FlatList
       data={data.menuItems}
-      renderItem={({ item: { name } }) => <Text>{name}</Text>}
+      renderItem={({ item }) => {
+        const { name, image } = item;
+        return (
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => navigation.navigate('MenuItem', { item })}
+            >
+              <Image style={styles.image} source={{ uri: image }} />
+              <Text style={styles.name}>{name}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      }
+      numColumns={2}
       keyExtractor={item => item.name}
     />
   );
@@ -44,4 +58,22 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  row: {
+    flex: 1,
+    marginTop: 20,
+    marginBottom: 20
+  },
+  card: {
+    alignItems: 'center'
+  },
+  image: {
+    height: 150,
+    width: 150,
+    borderRadius: 75
+  },
+  name: {
+    marginTop: 20,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  }
 });

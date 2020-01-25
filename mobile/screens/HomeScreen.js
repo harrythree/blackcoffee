@@ -6,15 +6,15 @@ import {
   View,
   Text,
   Image,
-  TouchableHighlight,
   Modal,
   TextInput,
-  Button,
   AsyncStorage
 } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Ionicons } from '@expo/vector-icons';
+
+import Button from '../components/Button';
 
 const NEWS_ITEMS = gql`
   {
@@ -127,9 +127,10 @@ export default function HomeScreen() {
         )}
         keyExtractor={item => item.title}
       />
-      <TouchableHighlight style={styles.joinNowButton} onPress={() => toggleModal(!modalOpen)}>
-        <Text style={styles.joinNowText}>Join now</Text>
-      </TouchableHighlight>
+      <Button
+        title={'Join now'}
+        onPress={() => toggleModal(!modalOpen)}
+      />
     </SafeAreaView>
   );
 }
@@ -170,22 +171,6 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     padding: 10,
-  },
-  joinNowButton: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    height: 55,
-    width: 130,
-    borderRadius: 30,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  joinNowText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold'
   },
   modalContent: {
     position: 'absolute',
