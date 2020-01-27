@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   SafeAreaView,
   FlatList,
@@ -15,6 +15,7 @@ import { gql } from 'apollo-boost';
 import { Ionicons } from '@expo/vector-icons';
 
 import Button from '../components/Button';
+import UserContext from '../contexts/user-context';
 
 const NEWS_ITEMS = gql`
   {
@@ -47,32 +48,36 @@ export default function HomeScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loading, error, data } = useQuery(NEWS_ITEMS);
-  const [ registerMutation, { data: registerData } ] = useMutation(REGISTER);
+  const [ registerMutation, { data: registerData, loading: mutationLoading, error: mutationError } ] = useMutation(REGISTER);
+  const { loggedIn, userLoggedOut, userLoggedIn } = useContext(UserContext);
 
   if (loading) return <Text>Loading...</Text>;
 
-  if (error) {
-    console.log(error);
+  if (error || mutationError) {
+    console.log('error');
     return <Text>Error...</Text>;
   }
 
   if (registerData) {
-    console.log(registerData);
     const { jwt } = registerData.register;
-    AsyncStorage.setItem('@blackcoffee-jwt', jwt);
+    // await AsyncStorage.setItem('@blackcoffee-jwt', jwt);
+    // dispatch({ 'login': true });
   }
 
-  const onPressRegister = async () =>
-    registerMutation({
-      variables: {
-        input: {
-          firstName,
-          lastName,
-          email,
-          password
-        }
-      }
-    });
+  // const onPressRegister = () =>
+  //   registerMutation({
+  //     variables: {
+  //       input: {
+  //         firstName,
+  //         lastName,
+  //         email,
+  //         password
+  //       }
+  //     }
+  //   })
+  //   .catch(error => dispatch({ type: 'logout' }));
+
+  const onPressRegister = () => userLoggedIn();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -116,6 +121,10 @@ export default function HomeScreen() {
           <Button title="Register" onPress={() => onPressRegister()} />
         </View>
       </Modal>
+      { loggedIn ? 
+        <View style={{ height: 200, width: '100%', backgroundColor: 'green' }}></View>
+        : null
+      }
       <FlatList
         data={data.newsItems}
         renderItem={({ item: { image, title, body } }) => (
@@ -127,10 +136,12 @@ export default function HomeScreen() {
         )}
         keyExtractor={item => item.title}
       />
-      <Button
-        title={'Join now'}
-        onPress={() => toggleModal(!modalOpen)}
-      />
+      { loggedIn ? null :
+        <Button
+          title={'Join now'}
+          onPress={() => toggleModal(!modalOpen)}
+        />
+      }
     </SafeAreaView>
   );
 }

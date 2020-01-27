@@ -12,14 +12,17 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { onError } from 'apollo-link-error';
 
-const authLink = setContext((_, { headers }) => {
-  // const token = await AsyncStorage.getItem('bcToken');
-  const token = null;
+import UserContext from './contexts/user-context';
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem('bcToken');
+
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     }
   }
 });
@@ -28,13 +31,28 @@ const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql'
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    for (let err of graphQLErrors) {
+      console.log(err.extensions.code);
+      console.log(err.extensions.response.status);
+    }
+  }
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 const client = new ApolloClient({
-  link: ApolloLink.from([authLink, httpLink]),
+  link: ApolloLink.from([authLink, errorLink, httpLink]),
   cache: new InMemoryCache()
 });
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [ loggedIn, setLoggedIn ] = useState(false);
+  
+  const userLoggedIn = () => setLoggedIn(true);
+  const userLoggedOut = () => setLoggedIn(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -46,12 +64,14 @@ export default function App(props) {
     );
   } else {
     return (
-      <ApolloProvider client={client}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
-      </ApolloProvider>
+      <UserContext.Provider value={{ loggedIn, userLoggedIn, userLoggedOut }}>
+        <ApolloProvider client={client}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </ApolloProvider>
+      </UserContext.Provider>
     );
   }
 }
