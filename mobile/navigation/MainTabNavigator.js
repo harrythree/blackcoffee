@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -9,16 +8,10 @@ import OrderScreen from '../screens/OrderScreen';
 import StoresScreen from '../screens/StoresScreen';
 import MenuItemScreen from '../screens/MenuItemScreen';
 
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
-});
-
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
-  },
-  config
+    Home: HomeScreen
+  }
 );
 
 HomeStack.navigationOptions = {
@@ -28,7 +21,7 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
     />
-  ),
+  )
 };
 
 HomeStack.path = '';
@@ -37,24 +30,22 @@ const OrderStack = createStackNavigator(
   {
     Order: OrderScreen,
     MenuItem: MenuItemScreen
-  },
-  config
+  }
 );
 
 OrderStack.navigationOptions = {
   tabBarLabel: 'Order',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-cafe' : 'md-cafe'} />
-  ),
+  )
 };
 
 OrderStack.path = '';
 
 const StoresStack = createStackNavigator(
   {
-    Stores: StoresScreen,
-  },
-  config
+    Stores: StoresScreen
+  }
 );
 
 StoresStack.navigationOptions = {
@@ -69,7 +60,7 @@ StoresStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   OrderStack,
-  StoresStack,
+  StoresStack
 });
 
 tabNavigator.path = '';

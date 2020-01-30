@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
   FlatList,
@@ -6,11 +6,10 @@ import {
   View,
   Text,
   Image,
-  Modal,
-  TextInput,
-  AsyncStorage
+  Platform,
+  TouchableOpacity
 } from 'react-native';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -27,100 +26,19 @@ const NEWS_ITEMS = gql`
   }
 `;
 
-const REGISTER = gql`
-  mutation Register($input: RegisterInput!) {
-    register(input: $input) {
-      jwt
-      user {
-        id
-        firstName
-        lastName
-        email
-      }
-    }
-  }
-`;
-
-export default function HomeScreen() {
-  const [ modalOpen, toggleModal ] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function HomeScreen({ navigation }) {
   const { loading, error, data } = useQuery(NEWS_ITEMS);
-  const [ registerMutation, { data: registerData, loading: mutationLoading, error: mutationError } ] = useMutation(REGISTER);
   const { loggedIn, userLoggedOut, userLoggedIn } = useContext(UserContext);
 
   if (loading) return <Text>Loading...</Text>;
 
-  if (error || mutationError) {
+  if (error) {
     console.log('error');
     return <Text>Error...</Text>;
   }
 
-  if (registerData) {
-    const { jwt } = registerData.register;
-    // await AsyncStorage.setItem('@blackcoffee-jwt', jwt);
-    // dispatch({ 'login': true });
-  }
-
-  // const onPressRegister = () =>
-  //   registerMutation({
-  //     variables: {
-  //       input: {
-  //         firstName,
-  //         lastName,
-  //         email,
-  //         password
-  //       }
-  //     }
-  //   })
-  //   .catch(error => dispatch({ type: 'logout' }));
-
-  const onPressRegister = () => userLoggedIn();
-
   return (
     <SafeAreaView style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalOpen}
-      >
-        <View style={styles.modalContent}>
-          <Ionicons
-            style={styles.modalClose}
-            name={'md-close'}
-            size={30}
-            onPress={() => toggleModal(false)}
-          />
-          <Text>First Name</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => setFirstName(text)}
-            value={firstName}
-          />
-          <Text>Last Name</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => setLastName(text)}
-            value={lastName}
-          />
-          <Text>Email</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => setEmail(text)}
-            value={email}
-          />
-          <Text>Password</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry={true}
-            onChangeText={text => setPassword(text)}
-            value={password}
-          />
-          <Button title="Register" onPress={() => onPressRegister()} />
-        </View>
-      </Modal>
       { loggedIn ? 
         <View style={{ height: 200, width: '100%', backgroundColor: 'green' }}></View>
         : null
@@ -139,15 +57,40 @@ export default function HomeScreen() {
       { loggedIn ? null :
         <Button
           title={'Join now'}
-          onPress={() => toggleModal(!modalOpen)}
+          onPress={() => navigation.navigate('RegisterModal')}
         />
       }
     </SafeAreaView>
   );
 }
 
-HomeScreen.navigationOptions = {
-  title: 'Home',
+HomeScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: null,
+    headerLeft: () => (
+      <TouchableOpacity
+        style={styles.headerButton}
+        onPress={() => navigation.navigate('LoginModal')}
+      >
+        <Ionicons
+          name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
+          size={26}
+        />
+        <Text style={styles.headerButtonText}>Sign in</Text>
+      </TouchableOpacity>
+    ),
+    headerRight: () => (
+      <TouchableOpacity
+        style={{ marginRight: 20 }}
+        onPress={() => alert('This is a button!')}
+      >
+        <Ionicons
+          name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+          size={26}
+        />
+      </TouchableOpacity>
+    )
+  }
 };
 
 const styles = StyleSheet.create({
@@ -183,24 +126,12 @@ const styles = StyleSheet.create({
   cardBody: {
     padding: 10,
   },
-  modalContent: {
-    position: 'absolute',
-    bottom: 0,
-    borderRadius: 10,
-    padding: 20,
-    backgroundColor: 'white',
-    height: '95%',
-    width: '100%'
+  headerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20
   },
-  modalClose: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  input: {
-    height: 40,
-    marginTop: 5,
-    marginBottom: 5,
-    borderColor: '#eee',
-    borderWidth: 1
-  },
+  headerButtonText: {
+    marginLeft: 10
+  }
 });

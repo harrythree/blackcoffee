@@ -1,12 +1,21 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-import AuthNavigator from './AuthNavigator';
 import MainTabNavigator from './MainTabNavigator';
+import LoginModal from '../screens/LoginModal';
+import RegisterModal from '../screens/RegisterModal';
 
-export default createAppContainer(
-  createSwitchNavigator({
+const RootStack = createStackNavigator(
+  {
     Main: MainTabNavigator,
-    Auth: AuthNavigator,
-  })
+    LoginModal,
+    RegisterModal
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none'
+  }
 );
+
+export default createAppContainer(RootStack);
