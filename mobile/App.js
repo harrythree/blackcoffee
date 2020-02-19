@@ -34,8 +34,7 @@ const httpLink = createHttpLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     for (let err of graphQLErrors) {
-      console.log(err.extensions.code);
-      console.log(err.extensions.response.status);
+      console.log(err);
     }
   }
 
@@ -49,10 +48,12 @@ const client = new ApolloClient({
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const [ loggedIn, setLoggedIn ] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   
   const userLoggedIn = () => setLoggedIn(true);
   const userLoggedOut = () => setLoggedIn(false);
+
+  const contextValue = {loggedIn, userLoggedIn, userLoggedOut};
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -64,7 +65,7 @@ export default function App(props) {
     );
   } else {
     return (
-      <UserContext.Provider value={{ loggedIn, userLoggedIn, userLoggedOut }}>
+      <UserContext.Provider value={contextValue}>
         <ApolloProvider client={client}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}

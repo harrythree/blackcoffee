@@ -33,16 +33,11 @@ export default function HomeScreen({ navigation }) {
   if (loading) return <Text>Loading...</Text>;
 
   if (error) {
-    console.log('error');
     return <Text>Error...</Text>;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      { loggedIn ? 
-        <View style={{ height: 200, width: '100%', backgroundColor: 'green' }}></View>
-        : null
-      }
       <FlatList
         data={data.newsItems}
         renderItem={({ item: { image, title, body } }) => (

@@ -17,6 +17,7 @@ const MENU_ITEMS = gql`
 
 export default function OrderScreen({ navigation }) {
   const { loading, error, data } = useQuery(MENU_ITEMS);
+  console.log(loading);
 
   if (loading) return <Text>Loading...</Text>;
 

@@ -21,8 +21,11 @@ const server = new ApolloServer({
         headers: { 'Content-Type': 'application/json' }
       };
       const response = await fetch(`${process.env.USERS_BASE_URL}/info`, fetchOptions);
-      const { id } = await response.json();
-      userContext.user = id;
+
+      if (response.ok) {
+        const { id } = await response.json();
+        userContext.user = id;
+      }
     }
 
     return userContext;

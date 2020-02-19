@@ -25,7 +25,7 @@ export default function RegisterModal({ navigation }) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [ registerMutation, { data: registerData, loading: mutationLoading, error: mutationError } ] = useMutation(REGISTER);
+  const [registerMutation, { data: registerData, loading: mutationLoading, error: mutationError }] = useMutation(REGISTER);
 
   const onPressRegister = () =>
     registerMutation({
@@ -38,7 +38,7 @@ export default function RegisterModal({ navigation }) {
         }
       }
     })
-    .catch(error => dispatch({ type: 'logout' }));
+    .catch(error => console.log(error));
 
   return (
     <SafeAreaView style={styles.content}>
@@ -73,7 +73,7 @@ export default function RegisterModal({ navigation }) {
         onChangeText={text => setPassword(text)}
         value={password}
       />
-      <Button title="Register" onPress={() => console.log('register')} />
+      <Button title="Register" onPress={() => onPressRegister()} />
     </SafeAreaView>
   )
 }
