@@ -27,11 +27,12 @@
     "expo-constants": "~8.0.0",
     "expo-font": "~8.0.0",
     "expo-web-browser": "~8.0.0",
-    "graphql": "^14.5.8",
+    "graphql": "^14.6.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.5.0",
+    "react-native-gesture-handler": "^1.5.6",
+    "react-native-maps": "0.26.1",
     "react-native-reanimated": "~1.4.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "~0.11.7",
@@ -40,7 +41,7 @@
     "react-navigation-tabs": "~2.6.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.8.4",
     "babel-preset-expo": "~8.0.0",
     "jest-expo": "~36.0.1"
   },

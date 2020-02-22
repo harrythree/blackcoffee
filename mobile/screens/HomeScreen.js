@@ -7,7 +7,8 @@ import {
   Text,
   Image,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -45,6 +46,9 @@ export default function HomeScreen({ navigation }) {
             <Image source={{ uri: image }} style={styles.cardImage} />
             <Text style={styles.cardTitle}>{title}</Text>
             <Text style={styles.cardBody}>{body}</Text>
+            <TouchableOpacity style={styles.detailsButton}>
+              <Text style={styles.detailsButtonText}>Details</Text>
+            </TouchableOpacity>
           </View>
         )}
         keyExtractor={item => item.title}
@@ -127,6 +131,19 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   headerButtonText: {
-    marginLeft: 10
+    marginLeft: 20
+  },
+  detailsButton: {
+    height: 40,
+    width: 80,
+    borderRadius: 20,
+    backgroundColor: '#000',
+    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  detailsButtonText: {
+    color: '#fff',
+    fontWeight: 'bold'
   }
 });
