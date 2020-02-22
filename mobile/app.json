@@ -23,8 +23,19 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.harrybaldwin.blackcoffee",
+      "config": {
+        "googleMaps": {
+          "apiKey": "<android maps key>"
+        }
+      }
+    },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.harrybaldwin.blackcoffee",
+      "config": {
+        "googleMapsApiKey": "<ios map api key>"
+      }
     }
   }
 }
