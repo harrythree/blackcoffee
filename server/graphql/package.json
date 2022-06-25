@@ -14,7 +14,7 @@
     "dotenv": "^8.2.0",
     "graphql": "^14.7.0",
     "lodash.merge": "^4.6.2",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "stripe": "^7.15.0"
   }
 }
